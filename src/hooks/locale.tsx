@@ -1,4 +1,4 @@
-import  React, { createContext, useContext, useCallback } from 'react';
+import React, { createContext, useContext, useCallback } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
@@ -6,6 +6,7 @@ interface AppLocaleContext {
   handleChangeLocale(language: string): void;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 const AppLocaleContext = createContext<AppLocaleContext>(
   {} as AppLocaleContext,
 );
@@ -27,7 +28,7 @@ export const AppLocaleProvider: React.FC = ({ children }) => {
   );
 };
 
-export const useLocale = () => {
+export const useLocale = (): AppLocaleContext => {
   const context = useContext(AppLocaleContext);
 
   if (!context) {

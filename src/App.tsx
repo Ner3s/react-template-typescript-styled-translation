@@ -1,12 +1,13 @@
+import React from 'react';
 import { Suspense } from 'react';
 
 import '~/locales';
+import GlobalStyles from './styles/global';
+
 import { AppProvider } from './hooks';
 import Routes from './routes';
 
-import GlobalStyles from './styles/global';
-
-const App = () => {
+const App: React.FC = () => {
   return (
     <>
       <AppProvider>

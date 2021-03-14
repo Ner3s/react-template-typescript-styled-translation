@@ -1,5 +1,4 @@
-import {
-  FC,
+import React, {
   createContext,
   useContext,
   useState,
@@ -18,9 +17,10 @@ interface AppThemeContext {
   toggleTheme(): void;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 const AppThemeContext = createContext({} as AppThemeContext);
 
-export const AppThemeProvider: FC = ({ children }) => {
+export const AppThemeProvider: React.FC = ({ children }) => {
   const [currentTheme, setCurrentTheme] = useState<ThemeState>(() => {
     const storedTheme = localStorage.getItem('@AppName:theme') as ThemeState;
 
@@ -51,7 +51,7 @@ export const AppThemeProvider: FC = ({ children }) => {
   );
 };
 
-export const useTheme = () => {
+export const useTheme = (): AppThemeContext => {
   const themeContext = useContext(AppThemeContext);
 
   if (!themeContext) {

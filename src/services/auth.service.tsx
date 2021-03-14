@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 
-import { IUser, User } from '~/models/User';
+import { User } from '~/models/User';
 
 import api from './api';
 
@@ -29,7 +29,7 @@ export async function signIn({ email, password }: IAuthProps): Promise<User> {
 export async function signUp({ email, password }: IAuthProps): Promise<User> {
   const response: AxiosResponse<User> = await api.post('/session/signup', {
     email,
-    password
+    password,
   });
 
   return response.data;

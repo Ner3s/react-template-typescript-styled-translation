@@ -10,6 +10,6 @@
  *
  */
 
-export function iconExample(){
-
+export function iconExample(data: string): string {
+  return data;
 }

@@ -10,6 +10,6 @@
  *
  */
 
-export function imageExample(){
-
+export function imageExample(data: string): string {
+  return data;
 }

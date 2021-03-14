@@ -45,9 +45,7 @@ const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 const AuthProvider: React.FC = ({ children }) => {
   const [data, setData] = useState<AuthState>(() => {
-    const existUserInLocalStorage = localStorage.getItem(
-      '@AppName:token',
-    );
+    const existUserInLocalStorage = localStorage.getItem('@AppName:token');
 
     let token = null;
     let user = null;
@@ -74,10 +72,7 @@ const AuthProvider: React.FC = ({ children }) => {
 
   const toggleToRememberMe = useCallback(() => {
     setRememberMe((prevState) => !prevState);
-    localStorage.setItem(
-      '@AppName:rememberMe',
-      JSON.stringify(!rememberMe),
-    );
+    localStorage.setItem('@AppName:rememberMe', JSON.stringify(!rememberMe));
   }, [rememberMe]);
 
   const signIn = useCallback(async ({ email, password }) => {
@@ -105,6 +100,7 @@ const AuthProvider: React.FC = ({ children }) => {
 
       setData({ token, user });
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log(error);
 
       toast.error('Falha na autenticação, verifique seus dados');
