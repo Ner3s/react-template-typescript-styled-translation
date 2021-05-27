@@ -5,6 +5,7 @@ import React, {
   useState,
   useCallback,
   ReactElement,
+  CSSProperties,
 } from 'react';
 
 import { useField } from '@unform/core';
@@ -15,8 +16,7 @@ import { Container } from './styles';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  containerStyle?: object;
+  containerStyle?: CSSProperties;
   icon?: React.ComponentType<IconBaseProps>;
   iconPassword?: boolean;
 }
@@ -49,7 +49,7 @@ function Input({
   }, []);
 
   const togglePasswordIsVisible = useCallback(() => {
-    setPasswordIsVisible(prevState => !prevState);
+    setPasswordIsVisible((prevState) => !prevState);
   }, []);
 
   useEffect(() => {
@@ -96,6 +96,6 @@ function Input({
       </Container>
     </>
   );
-};
+}
 
 export default Input;

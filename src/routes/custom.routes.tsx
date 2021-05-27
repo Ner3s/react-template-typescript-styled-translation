@@ -1,5 +1,4 @@
-/* eslint-disable react/require-default-props */
-import { ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import {
   RouteProps as ReactDOMRouteProps,
   Route as ReactDOMRoute,

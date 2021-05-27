@@ -76,7 +76,7 @@ function AuthProvider({ children }: AuthProps): ReactElement {
   };
 
   const logout = (): void => {
-    ['token', 'user'].forEach(key => {
+    ['token', 'user'].forEach((key) => {
       localStorage.removeItem(`${PREFIX}:${key}`);
     });
 

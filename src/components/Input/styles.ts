@@ -20,21 +20,21 @@ export const Container = styled.div<ContainerProps>`
   transition: all 0.2s ease-in-out;
   margin-bottom: 8px;
 
-  ${props =>
+  ${(props) =>
     props.isErrored &&
     css`
       border-color: #c53030;
     `}
 
   /* Se o input estiver focado, mude a cor do icone e da borda. A cor do icone esta conectado com color */
-  ${props =>
+  ${(props) =>
     props.isFocused &&
     css`
       border-color:   border: 1px solid #222;
     `}
 
   /* Se o input estiver preenchido, mude a cor do icone. A cor do icone esta conectado com color */
-  ${props =>
+  ${(props) =>
     props.isFilled &&
     css`
       color:   border: 1px solid #222;

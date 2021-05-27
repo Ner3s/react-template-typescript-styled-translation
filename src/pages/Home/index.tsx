@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 
 import { Container } from './styles';
 
-const Home: React.FC = () => {
+function Home(): ReactElement {
   return (
     <Container>
       <h1>Home</h1>
     </Container>
   );
-};
+}
 
 export default Home;

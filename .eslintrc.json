@@ -6,11 +6,10 @@
   },
   "extends": [
     "eslint:recommended",
-    "react-app",
     "plugin:react/recommended",
     "airbnb",
     "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended"
+    "prettier"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -28,16 +27,31 @@
   ],
   "rules": {
     "prettier/prettier": "error",
-    "react-hooks/rules-of-hooks": "error",
-    "react/jsx-props-no-spreading": "off",
+    "no-console": "warn",
+    "camelcase": "off",
     "react/require-default-props": "off",
+    "no-unused-expressions": "off",
+    "no-use-before-define": "off",
+    "no-param-reassign": "off",
+    "import/prefer-default-export": "off",
+    "import/no-duplicates": "off",
+    "import/no-extraneous-dependencies": "off",
+    "react/prop-types": "off",
+    "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
+    "react/jsx-one-expression-per-line": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/jsx-curly-newline": "off",
     "react/jsx-filename-extension": [1, {
       "extensions": [".tsx"]
     }],
-    "import/prefer-default-export": "off",
-    "no-use-before-define": "off",
-    "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/camelcase": "off",
+    "@typescript-eslint/explicit-function-return-type": [
+      "error",
+      {
+        "allowExpressions": true
+      }
+    ],
     "import/extensions": [
       "error",
       "ignorePackages",
@@ -46,9 +60,12 @@
         "tsx": "never"
       }
     ],
-    "no-console": "warn",
-    "camelcase": "off",
-    "@typescript-eslint/camelcase": "off"
+    "@typescript-eslint/no-empty-interface": [
+      "error",
+      {
+        "allowSingleExtends": true
+      }
+    ]
   },
   "settings": {
     "import/resolver": {

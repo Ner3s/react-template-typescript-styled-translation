@@ -1,6 +1,6 @@
-import React, { ButtonHTMLAttributes, ReactElement } from 'react';
-import { CSSProperties } from 'styled-components';
+import { ButtonHTMLAttributes, CSSProperties, ReactElement } from 'react';
 import { Container, ButtonText } from './styles';
+
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   textColor?: string;
   textFontSize?: number;
@@ -28,6 +28,6 @@ function Button({
       </ButtonText>
     </Container>
   );
-};
+}
 
 export default Button;

@@ -1,14 +1,15 @@
 import React from 'react';
 
-import { BrowserRouter, Switch } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
-import { Home } from '../pages';
+import { Home, Profile } from '~/pages';
 import CustomRoute from './custom.routes';
 
 const Routes: React.FC = () => (
   <BrowserRouter>
     <Switch>
-      <CustomRoute path="/" exact component={Home} />
+      <Route path="/" exact component={Home} />
+      <CustomRoute path="/profile" component={Profile} />
     </Switch>
   </BrowserRouter>
 );
