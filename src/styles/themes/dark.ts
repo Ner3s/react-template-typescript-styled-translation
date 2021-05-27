@@ -2,20 +2,20 @@ import light from './light';
 
 const dark: typeof light = {
   colors: {
-    background: '#FFDF22',
-    text: '#fff',
-
-    yellow: '#FFDF22',
-    white: '#fff',
-    black: '#000',
-
-    yellow_linear_gradient: 'linear-gradient(107deg, #FFD503 0%, #FFDF22 100%)',
-    red_linear_gradient: 'linear-gradient(99deg, #D90606 0%, #F11B1B 100%)',
-    black_linear_gradient: 'linear-gradient(99deg, #000000 0%, #232323 100%)',
+    white: '#FFFFFF',
   },
-  fontFamily: {
-    Lato: 'Lato, sans-serif',
-    Nunito: 'Nunito, sans-serif',
+  spacings: {
+    small: '1rem',
+    medium: '2rem',
+    large: '3rem',
+  },
+  font: {
+    sizes: {
+      small: '1.2rem',
+      medium: '1.8rem',
+      large: '2rem',
+      superLarge: '5rem',
+    },
   },
 };
 

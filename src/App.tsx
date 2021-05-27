@@ -1,5 +1,4 @@
 import React from 'react';
-import { Suspense } from 'react';
 
 import '~/locales';
 import GlobalStyles from './styles/global';
@@ -11,10 +10,8 @@ const App: React.FC = () => {
   return (
     <>
       <AppProvider>
-        <Suspense fallback={<p>Loading...</p>}>
-          <GlobalStyles />
-          <Routes />
-        </Suspense>
+        <GlobalStyles />
+        <Routes />
       </AppProvider>
     </>
   );

@@ -4,35 +4,35 @@ import React, {
   useRef,
   useState,
   useCallback,
-  FC,
-  CSSProperties,
+  ReactElement,
 } from 'react';
 
 import { useField } from '@unform/core';
 import { IconBaseProps } from 'react-icons';
-import { FiAlertCircle } from 'react-icons/fi';
+import { FiEye, FiEyeOff } from 'react-icons/fi';
 
-import { Container, Error } from './styles';
+import { Container } from './styles';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
   // eslint-disable-next-line @typescript-eslint/ban-types
-  containerStyle?: CSSProperties;
+  containerStyle?: object;
   icon?: React.ComponentType<IconBaseProps>;
-  showIconPassword?: boolean;
+  iconPassword?: boolean;
 }
 
-const Input: FC<InputProps> = ({
+function Input({
   name,
-  containerStyle,
+  containerStyle = {},
   icon: Icon,
-  showIconPassword = false,
+  iconPassword = false,
   ...rest
-}) => {
+}: InputProps): ReactElement {
   const inputRef = useRef<HTMLInputElement>(null); // HTMLInputElement - vai dar ao inputRef as propriedades de um input
 
   const [isFocused, setIsFocused] = useState(false); // Se esta com foco
   const [isFilled, setIsFilled] = useState(false); // Se esta preenchido
+
   const [passwordIsVisible, setPasswordIsVisible] = useState(false);
 
   const { fieldName, defaultValue, error, registerField } = useField(name);
@@ -49,7 +49,7 @@ const Input: FC<InputProps> = ({
   }, []);
 
   const togglePasswordIsVisible = useCallback(() => {
-    setPasswordIsVisible((prevState) => !prevState);
+    setPasswordIsVisible(prevState => !prevState);
   }, []);
 
   useEffect(() => {
@@ -61,44 +61,40 @@ const Input: FC<InputProps> = ({
   }, [fieldName, registerField]);
 
   return (
-    <Container
-      style={containerStyle}
-      isErrored={!!error}
-      isFilled={isFilled}
-      isFocused={isFocused}
-    >
-      {Icon && <Icon size={20} />}
+    <>
+      <Container
+        style={containerStyle}
+        isErrored={!!error}
+        isFilled={isFilled}
+        isFocused={isFocused}
+      >
+        {Icon && <Icon size={20} />}
 
-      <input
-        onFocus={handleInputFocus} // Receber o foco
-        onBlur={handleInputBlur} // Perder o foco
-        defaultValue={defaultValue}
-        type={showIconPassword && !passwordIsVisible ? 'password' : ''}
-        ref={inputRef}
-        {...rest}
-      />
+        <input
+          onFocus={handleInputFocus} // Receber o foco
+          onBlur={handleInputBlur} // Perder o foco
+          defaultValue={defaultValue}
+          type={iconPassword && !passwordIsVisible ? 'password' : ''}
+          ref={inputRef}
+          {...rest}
+        />
 
-      {showIconPassword && (
-        // <UseAnimations
-        //   reverse={passwordIsVisible}
-        //   animation={visibility}
-        //   size={40}
-        //   speed={5}
-        //   wrapperStyle={{
-        //     border: 1,
-        //   }}
-        //   onClick={togglePasswordIsVisible}
-        // />
-        // Fazer alguma coisa
-        <></>
-      )}
-
-      {error && (
-        <Error title={error}>
-          <FiAlertCircle color="#c53030" size={20} />
-        </Error>
-      )}
-    </Container>
+        {iconPassword &&
+          (passwordIsVisible ? (
+            <FiEyeOff
+              size={20}
+              onClick={togglePasswordIsVisible}
+              color="#e4007d"
+            />
+          ) : (
+            <FiEye
+              size={20}
+              onClick={togglePasswordIsVisible}
+              color="#e4007d"
+            />
+          ))}
+      </Container>
+    </>
   );
 };
 

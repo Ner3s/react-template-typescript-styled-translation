@@ -17,7 +17,6 @@ interface AppThemeContext {
   toggleTheme(): void;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
 const AppThemeContext = createContext({} as AppThemeContext);
 
 export const AppThemeProvider: React.FC = ({ children }) => {

@@ -1,150 +1,95 @@
-import React, { createContext, useCallback, useContext, useState } from 'react';
-
-import { toast } from 'react-toastify';
-
+import React, {
+  createContext,
+  useState,
+  useContext,
+  ReactNode,
+  ReactElement,
+} from 'react';
+import { ICredentials } from '~/models/Auth';
+import { IUser } from '~/models/User';
 import api from '~/services/api';
-import * as AuthService from '~/services/auth.service';
+import SessionService from '~/services/Session';
 
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  cpf: string;
-  cell_phone: string;
-  date_of_birth: string;
-  role: string;
-  profile_image_path: string;
-  balance: number;
-  code: string;
-  created_at: string;
-  updated_at: string;
-  status: boolean;
-  status_ebook: boolean;
+interface AuthContextData {
+  user: IUser;
+  signin(credentials: ICredentials): Promise<void>;
+  logout(): void;
+}
+
+interface AuthProps {
+  children: ReactNode;
 }
 
 interface AuthState {
   token: string;
-  user: User;
-}
-
-interface SignInCredentials {
-  email: string;
-  password: string;
-}
-
-interface AuthContextData {
-  loading: boolean;
-  user: User;
-  toggleToRememberMe(): void;
-  signIn(credentials: SignInCredentials): Promise<void>;
-  signOut(): void;
-  updateUser(user: User): void;
+  user: IUser;
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
-const AuthProvider: React.FC = ({ children }) => {
+function AuthProvider({ children }: AuthProps): ReactElement {
+  const PREFIX = '@AppName';
+
   const [data, setData] = useState<AuthState>(() => {
-    const existUserInLocalStorage = localStorage.getItem('@AppName:token');
+    const token = localStorage.getItem(`${PREFIX}:token`);
+    const userString = localStorage.getItem(`${PREFIX}:user`);
 
-    let token = null;
-    let user = null;
+    if (token && userString) {
+      const user: IUser = JSON.parse(userString);
+      api.defaults.headers.Authorizations = `Bearer ${token}`;
 
-    if (existUserInLocalStorage) {
-      token = localStorage.getItem('@AppName:token');
-      user = localStorage.getItem('@AppName:user');
-    } else {
-      token = sessionStorage.getItem('@AppName:token');
-      user = sessionStorage.getItem('@AppName:user');
-    }
-
-    if (token && user) {
-      api.defaults.headers.authorization = `Bearer ${token}`;
-
-      return { token, user: JSON.parse(user) }; // Transforma uma string em um objeto.
+      return { user, token };
     }
 
     return {} as AuthState;
   });
 
-  const [loading, setLoading] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);
+  const signin = async ({ email, password }: ICredentials): Promise<void> => {
+    const user = data;
+    if (user) logout();
 
-  const toggleToRememberMe = useCallback(() => {
-    setRememberMe((prevState) => !prevState);
-    localStorage.setItem('@AppName:rememberMe', JSON.stringify(!rememberMe));
-  }, [rememberMe]);
-
-  const signIn = useCallback(async ({ email, password }) => {
     try {
-      setLoading((prevState) => !prevState);
+      const response = await SessionService.signin({
+        email,
+        password,
+      });
 
-      const response = await AuthService.signIn({ email, password });
+      localStorage.setItem(
+        `${PREFIX}:token`,
+        JSON.stringify(response.data.auth.token),
+      );
 
-      const user = response.data;
-      const { token } = response.session;
+      localStorage.setItem(
+        `${PREFIX}:user`,
+        JSON.stringify(response.data.data),
+      );
 
-      const remember = localStorage.getItem('@AppName:rememberMe');
+      const json = {
+        user: response.data.data,
+        token: response.data.auth.token,
+      };
 
-      if (remember) {
-        localStorage.setItem('@AppName:token', token);
-        localStorage.setItem('@AppName:user', JSON.stringify(user)); // O user eh um objeto, preciso converter em uma string
-      } else if (!remember || remember === null) {
-        sessionStorage.setItem('@AppName:token', token);
-        sessionStorage.setItem('@AppName:user', JSON.stringify(user)); // O user eh um objeto, preciso converter em uma string
-      }
-
-      api.defaults.headers.authorization = `Bearer ${token}`;
-
-      toast.success('Autenticação realizada com sucesso!');
-
-      setData({ token, user });
+      setData(json);
     } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log(error);
-
-      toast.error('Falha na autenticação, verifique seus dados');
-
-      setLoading((prevState) => !prevState);
+      throw new Error(`${error.message ? error.message : error.error.message}`);
     }
-  }, []);
+  };
 
-  const signOut = useCallback(() => {
-    localStorage.removeItem('@AppName:token');
-    localStorage.removeItem('@AppName:user');
-    localStorage.removeItem('@AppName:rememberMe');
+  const logout = (): void => {
+    ['token', 'user'].forEach(key => {
+      localStorage.removeItem(`${PREFIX}:${key}`);
+    });
 
     setData({} as AuthState);
-    setLoading(false);
-  }, []);
-
-  const updateUser = useCallback(
-    async (user: User) => {
-      localStorage.setItem('@AppName:user', JSON.stringify(user)); // E precisa atualizar essa informacoes do avatar no localStorage tambem, se nao o react vai buscar por uma {user.avatar_url} que nao existe na img na pagina profile
-
-      setData({
-        token: data.token,
-        user,
-      });
-    },
-    [data.token],
-  );
+    api.defaults.headers.Authorization = '';
+  };
 
   return (
-    <AuthContext.Provider
-      value={{
-        loading,
-        user: data.user,
-        toggleToRememberMe,
-        signIn,
-        signOut,
-        updateUser,
-      }}
-    >
+    <AuthContext.Provider value={{ user: data.user, signin, logout }}>
       {children}
     </AuthContext.Provider>
   );
-};
+}
 
 function useAuth(): AuthContextData {
   const context = useContext(AuthContext);
@@ -156,4 +101,4 @@ function useAuth(): AuthContextData {
   return context;
 }
 
-export { AuthProvider, useAuth };
+export { useAuth, AuthProvider };

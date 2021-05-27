@@ -1,12 +1,20 @@
 import { createGlobalStyle } from 'styled-components';
 
 export default createGlobalStyle`
+  :root{
+    --primary: #222;
+    --secondary: #444;
+    --text-primary: #888;
+    --text-input: #454545;
+  }
+
   * {
     margin: 0;
     padding: 0;
+    outline: none;
     box-sizing: border-box;
-    outline: 0;
   }
+
 
   html {
     font-size: 62.5%; /* 1rem = 10px */
@@ -18,55 +26,19 @@ export default createGlobalStyle`
   }
 
   body {
-    height: auto;
-    background: #ffffff;
-    color: #000000;
     text-rendering: optimizeLegibility !important;
     -webkit-font-smoothing: antialiased !important;
     -moz-osx-font-smoothing: grayscale;
-  }
-
-  body, #root {
-    min-height: 100vh;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-  }
-
-  html, body, #root {
-    width: 100%;
-    height: 100%;
-  }
-
-  #root {
-    height: 100%;
-  }
-
-  body, input, button {
-    font: 1.6rem 'Lato', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    line-height: 1.48;
-  }
-
-  h1, h2, h3, h4, h5, h6, strong {
-    font-weight: 700;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: ${({ theme }) => theme.font.sizes.medium};
   }
 
   a {
     text-decoration: none;
-    background: none;
-    cursor: pointer;
-    border: 0;
-    transition: 180ms ease-in-out;
-  }
+    transition: opacity 300ms ease-in-out;
 
-  button {
-    cursor: pointer;
-    border: 0;
-  }
-
-  ul, li {
-    list-style: none;
-    /* text-align: left; */
-    padding: 0;
+    &:hover {
+      opacity: .6;
+    }
   }
 `;

@@ -1,131 +1,57 @@
+import { shade, lighten } from 'polished';
 import styled, { css } from 'styled-components';
 
 interface ButtonProps {
-  buttonDisable?: boolean;
-  size?: 'normal' | 'small';
-  variant?: 'yellow' | 'black' | 'red';
-  letterSpacing?: boolean;
+  bgColor?: string;
 }
 
 export const Container = styled.button<ButtonProps>`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background: #222;
 
-  text-align: center;
+  border-radius: 2rem;
+  padding: 0.5rem 3rem;
 
+  height: 4rem;
+  max-width: 323px;
   width: 100%;
-  ${(props) => {
-    switch (props.size) {
-      case 'normal':
-        return css`
-          height: 5.8rem;
-        `;
-      case 'small':
-        return css`
-          height: 4.4rem;
-        `;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
 
-      default:
-        return css`
-          height: 5.8rem;
-        `;
-    }
-  }}
-  ${(props) => {
-    switch (props.variant) {
-      case 'yellow':
-        return css`
-          background: ${props.theme.colors.yellow_linear_gradient};
-        `;
-
-      case 'red':
-        return css`
-          background: ${props.theme.colors.red_linear_gradient};
-        `;
-
-      case 'black':
-        return css`
-          background: ${props.theme.colors.black_linear_gradient};
-        `;
-
-      default:
-        return css`
-          background: ${props.theme.colors.yellow_linear_gradient};
-        `;
-    }
-  }}
-  border-radius: 5rem;
-
-  transition: 180ms ease-in;
-
-  ${(props) =>
-    props.buttonDisable &&
-    css`
-      background: gray;
-      cursor: not-allowed;
-    `}
+  box-shadow: 0.1rem 0.1rem 1rem #00000029;
 
   &:hover {
-    opacity: 0.85;
+    background: ${lighten(0.1, '#222')};
   }
 
-  p {
-    font-weight: bold;
-    ${(props) => {
-      switch (props.size) {
-        case 'normal':
-          return css`
-            font-size: 2.5rem;
-          `;
-
-        case 'small':
-          return css`
-            font-size: 1.6rem;
-          `;
-
-        default:
-          return css`
-            font-size: 2.5rem;
-          `;
-      }
-    }}
-    ${(props) => {
-      switch (props.letterSpacing) {
-        case true:
-          return css`
-            letter-spacing: 0.5rem;
-          `;
-
-        case false:
-          return '';
-
-        default:
-          return '';
-      }
-    }}
-    ${(props) => {
-      switch (props.variant) {
-        case 'black':
-          return css`
-            color: ${props.theme.colors.white};
-          `;
-
-        case 'red':
-          return css`
-            color: ${props.theme.colors.white};
-          `;
-
-        case 'yellow':
-          return css`
-            color: #0f0f0f;
-          `;
-
-        default:
-          return css`
-            color: #0f0f0f;
-          `;
-      }
-    }}
+  &:active {
+    background: ${shade(0.1, '#222')};
   }
+
+  background: ${(props) => props.bgColor};
+
+  &:hover {
+    ${(props) =>
+      props.bgColor &&
+      css`
+        background: ${lighten(0.1, `${props.bgColor}`)};
+      `}
+  }
+
+  &:active {
+    ${(props) =>
+      props.bgColor &&
+      css`
+        background: ${shade(0.1, `${props.bgColor}`)};
+      `}
+  }
+`;
+
+export const ButtonText = styled.p`
+  color: #fff;
+  font-size: 1.6rem;
+  font-family: 'Poppins';
+  font-weight: 700;
+  letter-spacing: 0.64px;
+  align-items: center;
 `;

@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { AuthProvider } from './auth';
-import { AppLocaleProvider } from './locale';
-import { AppThemeProvider } from './theme';
+import { AuthProvider } from './Auth';
+import { AppLocaleProvider } from './Locale';
+import { AppThemeProvider } from './Theme';
 
 export const AppProvider: React.FC = ({ children }) => (
   <AuthProvider>

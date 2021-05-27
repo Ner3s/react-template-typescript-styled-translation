@@ -3,7 +3,7 @@ import React from 'react';
 import { BrowserRouter, Switch } from 'react-router-dom';
 
 import { Home } from '../pages';
-import CustomRoute from './custom.route';
+import CustomRoute from './custom.routes';
 
 const Routes: React.FC = () => (
   <BrowserRouter>

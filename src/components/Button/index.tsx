@@ -1,38 +1,33 @@
-import React, { ButtonHTMLAttributes, CSSProperties } from 'react';
+import React, { ButtonHTMLAttributes, ReactElement } from 'react';
+import { CSSProperties } from 'styled-components';
+import { Container, ButtonText } from './styles';
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  textColor?: string;
+  textFontSize?: number;
+  icon?: any;
+  containerStyle?: CSSProperties;
+  bgColor?: string;
+}
 
-import { Container } from './styles';
-
-type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-  loading?: boolean;
-  buttonDisable?: boolean;
-  extraStyles?: CSSProperties;
-  size?: 'normal' | 'small';
-  variant?: 'yellow' | 'black' | 'red';
-  textContent: string;
-  letterSpacing?: boolean;
-};
-
-const Button: React.FC<ButtonProps> = ({
-  loading,
-  buttonDisable,
-  extraStyles,
-  textContent,
+function Button({
+  children,
+  containerStyle,
+  textColor,
+  textFontSize,
+  bgColor,
+  icon,
   ...rest
-}) => (
-  <Container
-    type="button"
-    disabled={buttonDisable}
-    buttonDisable={buttonDisable}
-    style={extraStyles}
-    {...rest}
-  >
-    {loading ? (
-      // fazer alguma coisa.
-      <></>
-    ) : (
-      <p>{textContent}</p>
-    )}
-  </Container>
-);
+}: ButtonProps): ReactElement {
+  return (
+    <Container bgColor={bgColor} type="button" style={containerStyle} {...rest}>
+      {icon}
+      <ButtonText
+        style={{ fontSize: textFontSize, color: textColor || '#FFF' }}
+      >
+        {children}
+      </ButtonText>
+    </Container>
+  );
+};
 
 export default Button;
