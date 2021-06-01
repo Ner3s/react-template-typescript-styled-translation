@@ -2,43 +2,61 @@ import { createGlobalStyle } from 'styled-components';
 
 export default createGlobalStyle`
   :root{
-    --primary: #222;
-    --secondary: #444;
-    --text-primary: #888;
-    --text-input: #454545;
+    --small: 1.5rem;
+    --medium: 3rem;
+    --large: 5rem;
+    --xl: 10rem;
   }
+
 
   * {
     margin: 0;
     padding: 0;
-    outline: none;
+    outline: 0;
     box-sizing: border-box;
   }
 
-
   html {
-    font-size: 62.5%; /* 1rem = 10px */
-    height: 100%;
+    font-size: 62.5%;
 
     @media (min-width: 1981px) {
       font-size: 80%;
     };
   }
 
+  html, body, #root{
+    height: 100%;
+  }
+
   body {
+    height: auto;
     text-rendering: optimizeLegibility !important;
     -webkit-font-smoothing: antialiased !important;
     -moz-osx-font-smoothing: grayscale;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    font-size: ${({ theme }) => theme.font.sizes.medium};
+  }
+
+  p {
+    font-size: var(--small);
   }
 
   a {
     text-decoration: none;
     transition: opacity 300ms ease-in-out;
+    cursor: pointer;
 
     &:hover {
       opacity: .6;
     }
+  }
+
+  button {
+    border: none;
+    outline: none;
+    cursor: pointer;
+  }
+
+  body, input, button{
+    font-family: -apple-system, BlinkMacSystemFont, 'Gotham', 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: var(--small);
   }
 `;
