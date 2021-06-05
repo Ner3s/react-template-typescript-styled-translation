@@ -5,6 +5,9 @@ import React, {
   ReactNode,
   ReactElement,
 } from 'react';
+
+import * as dateFns from 'date-fns';
+
 import { ICredentials } from '~/models/Auth';
 import { IUser } from '~/models/User';
 import api from '~/services/api';
@@ -12,6 +15,7 @@ import SessionService from '~/services/Session';
 
 interface AuthContextData {
   user: IUser;
+  isAuthenticated: boolean;
   signin(credentials: ICredentials): Promise<void>;
   logout(): void;
 }
@@ -28,15 +32,23 @@ interface AuthState {
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 function AuthProvider({ children }: AuthProps): ReactElement {
-  const PREFIX = '@AppName';
+  const PREFIX = '@Maosaobra';
 
   const [data, setData] = useState<AuthState>(() => {
     const token = localStorage.getItem(`${PREFIX}:token`);
     const userString = localStorage.getItem(`${PREFIX}:user`);
+    const expires_at = localStorage.getItem(`${PREFIX}:token.expires_at`);
+
+    if (expires_at) { // Verify if exists
+      const convertedDate: Date = new Date(expires_at); // Convert expires_at in date format
+      const validateDate = dateFns.addDays(convertedDate, 2); // Add 2 days after day in expires_at
+
+      convertedDate >= validateDate && logout();
+    }
 
     if (token && userString) {
-      const user: IUser = JSON.parse(userString);
-      api.defaults.headers.Authorizations = `Bearer ${token}`;
+      const user: IUser = JSON.parse(userString); // convert string in user object
+      api.defaults.headers.Authorizations = `Bearer ${token}`; // Add token in header request
 
       return { user, token };
     }
@@ -44,7 +56,11 @@ function AuthProvider({ children }: AuthProps): ReactElement {
     return {} as AuthState;
   });
 
-  const signin = async ({ email, password }: ICredentials): Promise<void> => {
+  const signin = async ({
+    email,
+    password,
+    remember_me,
+  }: ICredentials): Promise<void> => {
     const user = data;
     if (user) logout();
 
@@ -54,29 +70,33 @@ function AuthProvider({ children }: AuthProps): ReactElement {
         password,
       });
 
-      localStorage.setItem(
-        `${PREFIX}:token`,
-        JSON.stringify(response.data.auth.token),
-      );
+      localStorage.setItem(`${PREFIX}:token`, response.data.auth.token);
+
+      if (!remember_me) {
+        localStorage.setItem(`${PREFIX}:token.expires_at`, String(new Date()));
+      }
 
       localStorage.setItem(
         `${PREFIX}:user`,
         JSON.stringify(response.data.data),
       );
 
-      const json = {
+      setData({
         user: response.data.data,
-        token: response.data.auth.token,
-      };
+        token: response.data.auth.token
+      });
 
-      setData(json);
     } catch (error) {
-      throw new Error(`${error.message ? error.message : error.error.message}`);
+      throw new Error(
+        error?.response?.data?.error?.message
+          ? error?.response?.data?.error?.message
+          : 'Verifique os campos',
+      );
     }
   };
 
   const logout = (): void => {
-    ['token', 'user'].forEach((key) => {
+    ['token', 'user', 'token.expires_at'].forEach(key => {
       localStorage.removeItem(`${PREFIX}:${key}`);
     });
 
@@ -85,7 +105,9 @@ function AuthProvider({ children }: AuthProps): ReactElement {
   };
 
   return (
-    <AuthContext.Provider value={{ user: data.user, signin, logout }}>
+    <AuthContext.Provider
+      value={{ user: data.user, isAuthenticated: !!data.user, signin, logout }}
+    >
       {children}
     </AuthContext.Provider>
   );

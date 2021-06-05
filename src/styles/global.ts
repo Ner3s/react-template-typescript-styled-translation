@@ -8,7 +8,6 @@ export default createGlobalStyle`
     --xl: 10rem;
   }
 
-
   * {
     margin: 0;
     padding: 0;

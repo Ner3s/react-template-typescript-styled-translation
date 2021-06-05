@@ -9,6 +9,7 @@ export interface IAuth {
 export interface ICredentials {
   email: string;
   password: string;
+  remember_me?: boolean;
 }
 
 export interface IRecoverPassword {

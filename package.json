@@ -13,6 +13,7 @@
     "@unform/core": "^2.1.6",
     "@unform/web": "^2.1.6",
     "axios": "^0.21.1",
+    "date-fns": "^2.22.1",
     "i18next": "^20.3.0",
     "i18next-browser-languagedetector": "^6.1.1",
     "polished": "^4.1.2",
@@ -25,8 +26,14 @@
     "react-toastify": "^7.0.4",
     "styled-components": "^5.3.0",
     "typescript": "^4.3.2",
+    "uuid": "^8.3.2",
     "web-vitals": "^1.1.2",
     "yup": "^0.32.9"
+  },
+  "author": {
+    "name": "Alan Neres",
+    "email": "alanneres10@hotmail.com",
+    "url": "https://github.com/ner3s"
   },
   "scripts": {
     "start": "react-app-rewired start",
