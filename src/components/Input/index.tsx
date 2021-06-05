@@ -26,7 +26,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 function Input({
   name,
-  containerStyle,
+  containerStyle = {},
   label,
   icon: Icon,
   showIconPassword = false,
@@ -52,7 +52,7 @@ function Input({
   }, []);
 
   const togglePasswordIsVisible = useCallback(() => {
-    setPasswordIsVisible(prevState => !prevState);
+    setPasswordIsVisible((prevState) => !prevState);
   }, []);
 
   useEffect(() => {

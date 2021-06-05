@@ -20,30 +20,31 @@ export const SelectBlock = styled.div<SelectBlockProps>`
   background: #f9f9f9;
   width: 100%;
   height: 40px;
-  border: 2px solid ${({ theme }) => theme.colors.text_primary};
+  border: 2px solid ${({ theme }) => theme.colors.primary};
   border-radius: 0.8rem;
   transition: all 0.2s ease-in-out;
   margin-bottom: 8px;
   z-index: 2;
   font-weight: 400;
-  color: ${({ theme }) => theme.colors.text_primary};
+  color: ${({ theme }) => theme.colors.black};
   letter-spacing: 0.28px;
 
-  ${props =>
+  ${(props) =>
     props.isErrored &&
     css`
       border-color: #c53030;
     `}
 
   /* Se o input estiver focado, mude a cor do icone e da borda. A cor do icone esta conectado com color */
-  ${props =>
+  ${(props) =>
     props.isFocused &&
     css`
-      color:   border: 1px solid #e4007d;
-      border-color:   border: 1px solid #e4007d;
+      color:   border: 1px solid ${({ theme }) => theme.colors.secondary};
+      border-color:   border: 1px solid ${({ theme }) =>
+        theme.colors.secondary};
     `}
 
-  ${props =>
+  ${(props) =>
     props.isDisabled &&
     css`
       border-color: #00000024 !important;
@@ -58,7 +59,6 @@ export const SelectField = styled.select<SelectLabelProps>`
   padding: 1rem 2.1rem;
 
   option {
-    font-family: 'Poppins';
     font-size: 1.4rem;
     font-weight: 400;
     color: #000000;

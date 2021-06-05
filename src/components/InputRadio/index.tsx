@@ -85,7 +85,7 @@ function InputRadio({
         >
           <div className="radio" />
           <input
-            ref={elRef => {
+            ref={(elRef) => {
               inputRefs.current[index] = elRef as HTMLInputElement;
             }}
             onChange={() => {

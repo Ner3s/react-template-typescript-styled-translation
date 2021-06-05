@@ -9,7 +9,7 @@ export const Container = styled.label<ContainerProps>`
   font-weight: 400;
   display: inline-block;
   vertical-align: middle;
-  color: ${({ theme }) => theme.colors.text_input};
+  color: ${({ theme }) => theme.colors.black};
   position: relative;
   padding-left: 30px;
   padding-top: 1px;
@@ -25,7 +25,7 @@ export const Container = styled.label<ContainerProps>`
     width: 1.8rem;
     border-radius: 5px;
     background: #fff;
-    border: 0.1rem solid ${({ theme }) => theme.colors.text_input};
+    border: 0.1rem solid ${({ theme }) => theme.colors.secondary};
     display: block;
     position: absolute;
     left: 0;
@@ -36,7 +36,7 @@ export const Container = styled.label<ContainerProps>`
     content: '';
     height: 2rem;
     width: 2rem;
-    background: ${({ theme }) => theme.colors.primary};
+    background: ${({ theme }) => theme.colors.secondary};
     display: block;
     position: absolute;
     left: 50%;

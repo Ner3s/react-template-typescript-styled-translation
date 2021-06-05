@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode } from 'react';
+import { ReactElement, ReactNode } from 'react';
 
 import { Container } from './styles';
 
@@ -8,7 +8,11 @@ interface TooltipProps {
   children?: ReactNode;
 }
 
-function Tooltip({ title, className, children }: TooltipProps): ReactElement {
+function Tooltip({
+  title,
+  className = '',
+  children,
+}: TooltipProps): ReactElement {
   return (
     <Container className={className}>
       {children}

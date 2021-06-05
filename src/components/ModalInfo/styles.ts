@@ -24,9 +24,9 @@ export const BackdropContainer = styled.div<IBackdropContainer>`
   z-index: 3;
   background: #1e1e1e45;
 
-  align-items: ${props => (props.alignModal ? props.alignModal : 'center')};
+  align-items: ${(props) => (props.alignModal ? props.alignModal : 'center')};
 
-  ${props =>
+  ${(props) =>
     props.visible === false &&
     css`
       display: none;
@@ -50,13 +50,13 @@ export const Container = styled.div<IAlignModal>`
   align-items: center;
   z-index: 5;
 
-  ${props =>
+  ${(props) =>
     props.alignModal === 'flex-end' &&
     css`
       margin-bottom: -0.7rem;
     `}
 
-  ${props =>
+  ${(props) =>
     props.scrollView === true &&
     css`
       display: block;
@@ -78,7 +78,7 @@ export const BtnClose = styled.div<IBtnClose>`
   font-size: 2rem;
   border-radius: 50%;
 
-  ${props =>
+  ${(props) =>
     props.visible === false &&
     css`
       display: none;

@@ -50,7 +50,6 @@ export const Container = styled.button<ButtonProps>`
 export const ButtonText = styled.p`
   color: #fff;
   font-size: 1.6rem;
-  font-family: 'Poppins';
   font-weight: 700;
   letter-spacing: 0.64px;
   align-items: center;

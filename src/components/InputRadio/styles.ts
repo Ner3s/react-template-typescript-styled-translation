@@ -9,11 +9,9 @@ export const Container = styled.label<ContainerProps>`
   align-items: center;
   position: relative;
   background: transparent;
-  color: ${({ theme }) => theme.colors.text_primary};
+  color: ${({ theme }) => theme.colors.black};
   width: 100%;
-  border-bottom: 0.1rem solid ${({ theme }) => theme.colors.primary};
-  padding-bottom: ${({ theme }) => theme.sizes.small};
-  margin-bottom: ${({ theme }) => theme.sizes.small};
+  margin-bottom: ${({ theme }) => theme.font.sizes.small};
   cursor: pointer;
   transition: all 200ms ease-in-out;
 
@@ -23,16 +21,16 @@ export const Container = styled.label<ContainerProps>`
     height: 21px;
     min-width: 21px;
     min-height: 21px;
-    border: 1px solid ${({ theme }) => theme.colors.primary};
+    border: 1px solid ${({ theme }) => theme.colors.secondary};
     border-radius: 50%;
   }
 
-  ${props =>
+  ${(props) =>
     props.isChecked &&
     css`
       .radio {
         transition: all 200ms ease-in-out;
-        background-color: ${({ theme }) => theme.colors.primary};
+        background-color: ${({ theme }) => theme.colors.secondary};
       }
     `};
 

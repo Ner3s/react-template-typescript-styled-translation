@@ -40,7 +40,7 @@ function InputCheckbox({
   const handleCheck = useCallback(() => {
     const newArray: boolean[] = [];
 
-    inputRefs.current.forEach(item => {
+    inputRefs.current.forEach((item) => {
       newArray.push(item.checked);
     });
 
@@ -53,16 +53,16 @@ function InputCheckbox({
       name: fieldName,
       ref: inputRefs.current,
       getValue(refs: HTMLInputElement[]) {
-        return refs.filter(ref => ref.checked).map(ref => ref.value);
+        return refs.filter((ref) => ref.checked).map((ref) => ref.value);
       },
       clearValue: (refs: HTMLInputElement[]) => {
-        refs.forEach(ref => {
+        refs.forEach((ref) => {
           // eslint-disable-next-line no-param-reassign
           ref.checked = false;
         });
       },
       setValue: (refs: HTMLInputElement[], values: string[]) => {
-        refs.forEach(ref => {
+        refs.forEach((ref) => {
           if (values.includes(ref.id)) {
             // eslint-disable-next-line no-param-reassign
             ref.checked = true;
@@ -88,7 +88,7 @@ function InputCheckbox({
               defaultValue.find((dv: string) => dv === option.id) ||
               option.checked
             }
-            ref={elRef => {
+            ref={(elRef) => {
               inputRefs.current[index] = elRef as HTMLInputElement;
             }}
             onChange={handleCheck}

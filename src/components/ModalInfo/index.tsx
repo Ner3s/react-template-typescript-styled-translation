@@ -39,7 +39,7 @@ function ModalInfo({
   }, [modalVisible, setModalVisible]);
 
   const handleModalVisible = useCallback(
-    e => {
+    (e) => {
       if (e.target === backdrop.current) {
         setModalVisible(!modalVisible);
       }

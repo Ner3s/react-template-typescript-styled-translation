@@ -3,7 +3,7 @@ export default {
     white: '#FFFFFF',
     black: '#000000',
     primary: '#F4F4F4',
-    secondary: '#222222'
+    secondary: '#222222',
   },
   spacings: {
     small: '1.5rem',

@@ -39,7 +39,8 @@ function AuthProvider({ children }: AuthProps): ReactElement {
     const userString = localStorage.getItem(`${PREFIX}:user`);
     const expires_at = localStorage.getItem(`${PREFIX}:token.expires_at`);
 
-    if (expires_at) { // Verify if exists
+    if (expires_at) {
+      // Verify if exists
       const convertedDate: Date = new Date(expires_at); // Convert expires_at in date format
       const validateDate = dateFns.addDays(convertedDate, 2); // Add 2 days after day in expires_at
 
@@ -83,9 +84,8 @@ function AuthProvider({ children }: AuthProps): ReactElement {
 
       setData({
         user: response.data.data,
-        token: response.data.auth.token
+        token: response.data.auth.token,
       });
-
     } catch (error) {
       throw new Error(
         error?.response?.data?.error?.message
@@ -96,7 +96,7 @@ function AuthProvider({ children }: AuthProps): ReactElement {
   };
 
   const logout = (): void => {
-    ['token', 'user', 'token.expires_at'].forEach(key => {
+    ['token', 'user', 'token.expires_at'].forEach((key) => {
       localStorage.removeItem(`${PREFIX}:${key}`);
     });
 

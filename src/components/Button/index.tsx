@@ -1,20 +1,21 @@
 import { ButtonHTMLAttributes, CSSProperties, ReactElement } from 'react';
+import { IconBaseProps } from 'react-icons';
 import { Container, ButtonText } from './styles';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   textColor?: string;
   textFontSize?: number;
-  icon?: any;
+  icon?: React.ComponentType<IconBaseProps>;
   containerStyle?: CSSProperties;
   bgColor?: string;
 }
 
 function Button({
   children,
-  containerStyle,
+  containerStyle = {},
   textColor,
   textFontSize,
-  bgColor,
+  bgColor = '',
   icon,
   ...rest
 }: ButtonProps): ReactElement {
@@ -22,7 +23,10 @@ function Button({
     <Container bgColor={bgColor} type="button" style={containerStyle} {...rest}>
       {icon}
       <ButtonText
-        style={{ fontSize: textFontSize, color: textColor || '#FFF' }}
+        style={{
+          fontSize: textFontSize || '1.5rem',
+          color: textColor || '#FFF',
+        }}
       >
         {children}
       </ButtonText>

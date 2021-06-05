@@ -39,12 +39,11 @@ const Select = forwardRef(
     {
       name,
       options,
-      value,
       setValue,
       setParentFocus,
-      containerStyle,
+      containerStyle = {},
       initialValue,
-      isDisabled,
+      isDisabled = false,
       ...props
     }: SelectProps,
     innerRef?: ForwardedRef<HTMLSelectElement>,
@@ -72,7 +71,7 @@ const Select = forwardRef(
     }, []);
 
     const handleChange = useCallback(
-      e => {
+      (e) => {
         setValue && setValue(e.target.value);
       },
       [setValue],
@@ -94,7 +93,8 @@ const Select = forwardRef(
         style={containerStyle}
       >
         <SelectField
-          {...{ name, defaultValue, value }}
+          defaultValue={defaultValue}
+          name={name}
           ref={inputRef}
           onChange={handleChange}
           onFocus={handleInputFocus}
@@ -102,13 +102,13 @@ const Select = forwardRef(
           isFocused={isFocused}
           {...props}
         >
-          <option value={initialValue?.value || ''}>
+          <option disabled hidden value={initialValue?.value || ''}>
             {initialValue?.label || 'Selecione uma opção'}
           </option>
           {options
-            ?.filter(option => option.value !== initialValue?.value)
-            .map(option => (
-              <option key={option.value} value={option.value}>
+            ?.filter((option) => option.value !== initialValue?.value)
+            .map((option) => (
+              <option key={option.value || ''} value={option.value || ''}>
                 {option.label}
               </option>
             ))}
@@ -121,11 +121,5 @@ const Select = forwardRef(
     );
   },
 );
-
-Select.defaultProps = {
-  setValue: undefined,
-  value: undefined,
-  setParentFocus: undefined,
-};
 
 export default Select;
