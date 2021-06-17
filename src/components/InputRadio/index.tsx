@@ -55,6 +55,7 @@ function InputRadio({
   );
 
   useEffect(() => {
+    // setIsChecked(null);
     registerField({
       name: fieldName,
       ref: inputRefs.current,
@@ -70,6 +71,10 @@ function InputRadio({
           item.checked = true;
         }
       },
+      clearValue: (refs: HTMLInputElement[]) => {
+        const inputRef = refs.find(ref => ref.checked === true);
+        if (inputRef) inputRef.checked = false;
+      },
     });
 
     handleCheck();
@@ -83,20 +88,21 @@ function InputRadio({
           style={containerStyle}
           isChecked={isChecked[index]}
         >
-          <div className="radio" />
+          {/* <div className="radio" /> */}
           <input
-            ref={(elRef) => {
+            ref={elRef => {
               inputRefs.current[index] = elRef as HTMLInputElement;
-            }}
-            onChange={() => {
-              handleCheck(index);
             }}
             type="radio"
             defaultValue={defaultValue}
             name={fieldName}
+            onChange={() => {
+              handleCheck(index);
+            }}
             value={option.id}
             {...rest}
           />
+          <span />
           <p>{option.label}</p>
           {Icon && <Icon size={20} />}
         </Container>
